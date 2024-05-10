@@ -73,54 +73,50 @@ class MessagesViewController: MSMessagesAppViewController, ConversationDelegate 
     }
     
     var selectedEmojiText: String = ""
-    var emojiImage: UIImage?
     
     func sendMessage(text: String) {
-        //print("DELEGATE WORKING")
-        //print(self.activeConversation?.)
-
-//        let imagePath = Bundle.main.path(forResource: "strawberry", ofType: ".png")
-//        let pathURL = URL(fileURLWithPath: imagePath!)
-//        
-//        do {
-//            var sticker = try MSSticker(contentsOfFileURL: pathURL, localizedDescription: "Strawberry Sticker")
-//            //self.activeConversation?.insertText("Text from Code!!!")
-//            self.activeConversation?.insert(sticker)
-//        }
-//        catch {
-//            
-//        }
+        let imagePath = Bundle.main.path(forResource: text + "-x2", ofType: "png")
+        let pathURL = URL(fileURLWithPath: imagePath!)
+        
         selectedEmojiText = text
         
-        let message = MSMessage()
-        let layout = MSMessageTemplateLayout()
-        
-        emojiImage = imageFromEmoji(emoji: selectedEmojiText, size: 20)
-        layout.image = emojiImage
-        message.summaryText = text
-        message.layout = layout
-        self.activeConversation?.insert(message)
+        do {
+            var sticker = try MSSticker(contentsOfFileURL: pathURL, localizedDescription: "Emoji")
+            self.activeConversation?.insert(sticker)
+        }
+        catch {
+            
+        }
         
     }
     
-    func setEmojiSize(size: CGFloat) {
+    func setEmojiSize(size: EmojiStickerSize) {
         
+        var sizeText = "x2"
         
-        let message = MSMessage()
-        let layout = MSMessageTemplateLayout()
-        
-        var img = imageFromEmoji(emoji: selectedEmojiText, size: 20)
-        
-        let image = CGSize(width: 10, height: 10).image { context, frame in
-
-            img?.draw(in: frame, blendMode: .luminosity, alpha: 1)
+        if size == EmojiStickerSize.Small {
+            sizeText = "x1.5"
+        }
+        else if size == EmojiStickerSize.Medium {
+            sizeText = "x2"
+        }
+        else if size == EmojiStickerSize.Large {
+            sizeText = "x3"
+        }
+        else if size == EmojiStickerSize.ExtraLarge {
+            sizeText = "x4"
         }
         
-        layout.image = image
-        
-        message.summaryText = selectedEmojiText
-        message.layout = layout
-        self.activeConversation?.insert(message)
+        do {
+            let imagePath = Bundle.main.path(forResource: selectedEmojiText + "-" + sizeText, ofType: "png")
+            let pathURL = URL(fileURLWithPath: imagePath!)
+            
+            var sticker = try MSSticker(contentsOfFileURL: pathURL, localizedDescription: "Emoji")
+            self.activeConversation?.insert(sticker)
+        }
+        catch {
+            
+        }
     }
     
     // MARK: - Conversation Handling

@@ -9,13 +9,30 @@ import SwiftUI
 
 protocol ConversationDelegate {
     func sendMessage(text: String)
-    func setEmojiSize(size: CGFloat)
+    func setEmojiSize(size: EmojiStickerSize)
 }
+
+enum EmojiStickerSize {
+    case Small
+    case Medium
+    case Large
+    case ExtraLarge
+}
+
+let emojiImages = [
+    "grinning-face",
+    "face-with-tears-of-joy",
+    "man-facepalming",
+    "prince"
+]
+
+let emojiList = [
+    "😀", "😂", "🤦‍♂️", "🤴"
+]
 
 struct EmojiView: View {
     var delegate: ConversationDelegate?
-    
-    var emojiList: [String]
+
     var itemsPerRow: Int = 5
     
     var body: some View {
@@ -39,7 +56,8 @@ struct EmojiView: View {
                         let index = rowStartIndex + j
                         
                         Button(emojiList[index]) {
-                            delegate?.sendMessage(text: emojiList[index])
+                            //delegate?.sendMessage(text: emojiList[index])
+                            delegate?.sendMessage(text: emojiImages[index])
                         }
                         .font(.system(size: 40))
                         Spacer()
@@ -51,18 +69,7 @@ struct EmojiView: View {
 }
 
 struct MainView: View {
-    let emojiList = [
-        "😀", "😃", "😄", "😁", "😆",
-        "🥹", "😅", "😂", "🤣", "🥲",
-        "☺️", "😊", "😇", "🙂", "🙃",
-        "😉", "😌", "😍", "🥰", "😘",
-        "😗", "😙", "😚", "😋", "😛",
-        "😝", "😜", "🤪", "🤨", "🧐",
-        "🤓", "😎", "🥸", "🤩", "🥳",
-        "😏", "😒", "😞", "😔", "😟"
-    ]
-    //"", "", "", "", "",
-    
+
     var delegate: ConversationDelegate?
     
     let brownColor = Color(UIColor(red: 212, green: 147, blue: 57, alpha: 1))
@@ -73,22 +80,20 @@ struct MainView: View {
             Color("BackgroundColor").ignoresSafeArea()
             VStack {
                 ScrollView(.vertical) {
-                    EmojiView(delegate: delegate, emojiList: emojiList)
+                    EmojiView(delegate: delegate)
                 }
                 HStack {
                     Spacer()
                     Text("Select Size:")
                         .font(.system(size: 26).bold())
                     Spacer()
-                    Button("x2") {delegate?.setEmojiSize(size: 20)}
+                    Button("x1.5") {delegate?.setEmojiSize(size: EmojiStickerSize.Small)}
                     Spacer()
-                    Button("x3") {delegate?.setEmojiSize(size: 30)}
+                    Button("x2") {delegate?.setEmojiSize(size: EmojiStickerSize.Medium)}
                     Spacer()
-                    Button("x4") {delegate?.setEmojiSize(size: 40)}
+                    Button("x3") {delegate?.setEmojiSize(size: EmojiStickerSize.Large)}
                     Spacer()
-                    Button("x5") {delegate?.setEmojiSize(size: 60)}
-                    Spacer()
-                    Button("x6") {delegate?.setEmojiSize(size: 80)}
+                    Button("x4") {delegate?.setEmojiSize(size: EmojiStickerSize.ExtraLarge)}
                     Spacer()
                 }
                 .background(Color("DarkBackgroundColor"))
