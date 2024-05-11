@@ -22,12 +22,18 @@ enum EmojiStickerSize: CGFloat {
 let emojiImages = [
     "grinning-face",
     "face-with-tears-of-joy",
+    "smiling-face-with-heart-eyes",
+    "smirking-face",
+    "loudly-crying-face",
+    "pouting-face",
+    "face-with-rolling-eyes",
+    "clown-face",
     "man-facepalming",
     "prince"
 ]
 
 let emojiList = [
-    "😀", "😂", "🤦‍♂️", "🤴"
+    "😀", "😂", "😍", "😏", "😭", "😡", "🙄", "🤡", "🤦‍♂️", "🤴"
 ]
 
 struct EmojiView: View {
