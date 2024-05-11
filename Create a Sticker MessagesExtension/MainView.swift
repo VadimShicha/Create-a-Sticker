@@ -9,14 +9,14 @@ import SwiftUI
 
 protocol ConversationDelegate {
     func sendMessage(text: String)
-    func setEmojiSize(size: EmojiStickerSize)
+    func setEmojiSize(size: CGFloat)
 }
 
-enum EmojiStickerSize {
-    case Small
-    case Medium
-    case Large
-    case ExtraLarge
+enum EmojiStickerSize: CGFloat {
+    case Small = 1.5
+    case Medium = 2
+    case Large = 3
+    case ExtraLarge = 4
 }
 
 let emojiImages = [
@@ -34,6 +34,8 @@ struct EmojiView: View {
     var delegate: ConversationDelegate?
 
     var itemsPerRow: Int = 5
+    
+    @State var selectedEmojiIndex: Int = 0
     
     var body: some View {
         VStack {
@@ -58,8 +60,12 @@ struct EmojiView: View {
                         Button(emojiList[index]) {
                             //delegate?.sendMessage(text: emojiList[index])
                             delegate?.sendMessage(text: emojiImages[index])
+                            selectedEmojiIndex = index
                         }
                         .font(.system(size: 40))
+                        .padding(5)
+                        .background(selectedEmojiIndex == index ? Color("EmojiSelectedBackgroundColor") : Color("EmojiBackgroundColor"))
+                        .cornerRadius(7)
                         Spacer()
                     }
                 }
@@ -75,11 +81,18 @@ struct MainView: View {
     let brownColor = Color(UIColor(red: 212, green: 147, blue: 57, alpha: 1))
     let darkerBrownColor = Color(UIColor(red: 199, green: 136, blue: 48, alpha: 1))
     
+    @State var selectedSizeIndex: Int = 1
+    
     var body: some View {
         ZStack {
-            Color("BackgroundColor").ignoresSafeArea()
+            Image("BackgroundTexture")
+                .resizable(resizingMode: .tile)
+            
+            //Color("BackgroundColor").ignoresSafeArea()
             VStack {
                 ScrollView(.vertical) {
+                    Text("Select an Emoji")
+                        .font(.system(size: 30).bold())
                     EmojiView(delegate: delegate)
                 }
                 HStack {
@@ -87,13 +100,17 @@ struct MainView: View {
                     Text("Select Size:")
                         .font(.system(size: 26).bold())
                     Spacer()
-                    Button("x1.5") {delegate?.setEmojiSize(size: EmojiStickerSize.Small)}
+                    Button("x1.5") {selectedSizeIndex = 0; delegate?.setEmojiSize(size: 1.5)}
+                        .font(.system(size: selectedSizeIndex == 0 ? 33 : 24).bold())
                     Spacer()
-                    Button("x2") {delegate?.setEmojiSize(size: EmojiStickerSize.Medium)}
+                    Button("x2") {selectedSizeIndex = 1; delegate?.setEmojiSize(size: 2)}
+                        .font(.system(size: selectedSizeIndex == 1 ? 33 : 24).bold())
                     Spacer()
-                    Button("x3") {delegate?.setEmojiSize(size: EmojiStickerSize.Large)}
+                    Button("x3") {selectedSizeIndex = 2; delegate?.setEmojiSize(size: 3)}
+                        .font(.system(size: selectedSizeIndex == 2 ? 33 : 24).bold())
                     Spacer()
-                    Button("x4") {delegate?.setEmojiSize(size: EmojiStickerSize.ExtraLarge)}
+                    Button("x4") {selectedSizeIndex = 3; delegate?.setEmojiSize(size: 4)}
+                        .font(.system(size: selectedSizeIndex == 3 ? 33 : 24).bold())
                     Spacer()
                 }
                 .background(Color("DarkBackgroundColor"))

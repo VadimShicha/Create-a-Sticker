@@ -29,6 +29,12 @@ extension String {
     
 }
 
+extension CGFloat {
+    var shortValue: String {
+        return String(format: "%g", self)
+    }
+}
+
 extension CGSize {
     
     typealias ContextClosure = (_ context: CGContext, _ frame: CGRect) -> ()
@@ -72,15 +78,17 @@ class MessagesViewController: MSMessagesAppViewController, ConversationDelegate 
         ], size: CGSize(width: size, height: size))
     }
     
-    var selectedEmojiText: String = ""
+    var selectedEmojiText: String = "grinning-face"
+    var selectedEmojiSize: CGFloat = 2
     
     func sendMessage(text: String) {
-        let imagePath = Bundle.main.path(forResource: text + "-x2", ofType: "png")
-        let pathURL = URL(fileURLWithPath: imagePath!)
         
         selectedEmojiText = text
         
         do {
+            let imagePath = Bundle.main.path(forResource: text + "-x\(selectedEmojiSize.shortValue)", ofType: "png")
+            let pathURL = URL(fileURLWithPath: imagePath!)
+            
             var sticker = try MSSticker(contentsOfFileURL: pathURL, localizedDescription: "Emoji")
             self.activeConversation?.insert(sticker)
         }
@@ -90,25 +98,16 @@ class MessagesViewController: MSMessagesAppViewController, ConversationDelegate 
         
     }
     
-    func setEmojiSize(size: EmojiStickerSize) {
+    func setEmojiSize(size: CGFloat) {
         
-        var sizeText = "x2"
-        
-        if size == EmojiStickerSize.Small {
-            sizeText = "x1.5"
-        }
-        else if size == EmojiStickerSize.Medium {
-            sizeText = "x2"
-        }
-        else if size == EmojiStickerSize.Large {
-            sizeText = "x3"
-        }
-        else if size == EmojiStickerSize.ExtraLarge {
-            sizeText = "x4"
+        if selectedEmojiText == "" {
+            return
         }
         
+        selectedEmojiSize = size
+
         do {
-            let imagePath = Bundle.main.path(forResource: selectedEmojiText + "-" + sizeText, ofType: "png")
+            let imagePath = Bundle.main.path(forResource: selectedEmojiText + "-x\(size.shortValue)", ofType: "png")
             let pathURL = URL(fileURLWithPath: imagePath!)
             
             var sticker = try MSSticker(contentsOfFileURL: pathURL, localizedDescription: "Emoji")
