@@ -9,25 +9,7 @@ import UIKit
 import Messages
 import SwiftUI
 
-extension String {
-    
-    /// Generates a `UIImage` instance from this string using a specified
-    /// attributes and size.
-    ///
-    /// - Parameters:
-    ///     - attributes: to draw this string with. Default is `nil`.
-    ///     - size: of the image to return.
-    /// - Returns: a `UIImage` instance from this string using a specified
-    /// attributes and size, or `nil` if the operation fails.
-    func image(withAttributes attributes: [NSAttributedString.Key: Any]? = nil, size: CGSize? = nil) -> UIImage? {
-        let size = size ?? (self as NSString).size(withAttributes: attributes)
-        return UIGraphicsImageRenderer(size: size).image { _ in
-            (self as NSString).draw(in: CGRect(origin: .zero, size: size),
-                                    withAttributes: attributes)
-        }
-    }
-    
-}
+
 
 extension CGFloat {
     var shortValue: String {
@@ -35,20 +17,7 @@ extension CGFloat {
     }
 }
 
-extension CGSize {
-    
-    typealias ContextClosure = (_ context: CGContext, _ frame: CGRect) -> ()
-    func image(withContext context: ContextClosure) -> UIImage? {
-        
-        UIGraphicsBeginImageContext(self)
-        let frame = CGRect(origin: .zero, size: self)
-        context(UIGraphicsGetCurrentContext()!, frame)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image
-    }
-}
+
 
 @objc(MessagesViewController)
 class MessagesViewController: MSMessagesAppViewController, ConversationDelegate {
@@ -71,15 +40,14 @@ class MessagesViewController: MSMessagesAppViewController, ConversationDelegate 
         ])
     }
     
-    func imageFromEmoji(emoji: String, size: CGFloat) -> UIImage? {
-        return emoji.image(withAttributes: [
-            .font: UIFont.systemFont(ofSize: size),
-            .backgroundColor: UIColor.init(red: 0, green: 0, blue: 0, alpha: 0)
-        ], size: CGSize(width: size, height: size))
-    }
-    
     var selectedEmojiText: String = "grinning-face"
     var selectedEmojiSize: CGFloat = 2
+    
+    func sendText(text: String) {
+        //self.activeConversation?.sendText(text)
+        self.activeConversation?.sendText(text, completionHandler: {e in print(e)})
+    }
+    
     
     func sendMessage(text: String) {
         

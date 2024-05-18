@@ -8,6 +8,7 @@
 import SwiftUI
 
 protocol ConversationDelegate {
+    func sendText(text: String)
     func sendMessage(text: String)
     func setEmojiSize(size: CGFloat)
 }
@@ -35,6 +36,119 @@ let emojiImages = [
 let emojiList = [
     "😀", "😂", "😍", "😏", "😭", "😡", "🙄", "🤡", "🤦‍♂️", "🤴"
 ]
+
+let symbolArtList = [
+    """
+    _______@@___@@_________
+    _______@@___@@_________
+    _______@@___@@_________
+    _@____ @@___@@_____@__
+    _@____ @@___@@_____@__
+    __@_________________@___
+    ___@_______________@____
+    _____@___________@______
+    _______@@@@@@________
+    """,
+    
+    """
+    _______§§§§§§§§§§§§§§§§_____
+    _____§§§__§§§§__§§§§__§§____
+    ___§§§§§§__§§§§__§§§§__§§§__
+    _§§§__§§§§__§§§§__§§§§__§§§_
+    §§§§§__§§§§__§§§§__§§§§__§§§
+    §_§§§§__§§§§__§§§§__§§§§__§§
+    §__§§§§__§§§§__§§§§__§§§§__§
+    §§__§§§§__§§§§__§§§§__§§§§_§
+    §§§__§§§§__§§§§__§§§§__§§§§§
+    _§§§__§§§§__§§§§__§§§§__§§§_
+    __§§§__§§§§__§§§§__§§§§__§__
+    ___§§§__§§§§__§§§§__§§§§§___
+    _____§§__§§§§__§§§§__§§§____
+    ______§§§§§§§§§§§§§§§§§_____
+    _________¶¶__¶¶¶__¶¶________
+    __________¶___¶___¶_________
+    __________¶___¶___¶_________
+    __________¶___¶___¶_________
+    ________¶¶¶¶¶¶¶¶¶¶¶¶¶_______
+    ________ ¶1111111111¶_______
+    ________ ¶1111111111¶_______
+    ________¶¶¶¶¶¶¶¶¶¶¶¶¶_______
+    """,
+    
+    """
+    ________$$$$_______________
+    _______$$__$_______________
+    _______$___$$______________
+    _______$___$$______________
+    _______$$___$$_____________
+    ________$____$$____________
+    ________$$____$$$__________
+    _________$$_____$$_________
+    _________$$______$$________
+    __________$_______$$_______
+    ____$$$$$$$________$$______
+    __$$$_______________$$$$$$
+    _$$____$$$$____________$$$
+    _$___$$$__$$$____________$$
+    _$$________$$$____________$
+    __$$____$$$$$$____________$
+    __$$$$$$$____$$___________$
+    __$$_______$$$$___________$
+    ___$$$$$$$$$__$$_________$$
+    ____$________$$$$_____$$$$
+    ____$$____$$$$$$____$$$$$$
+    _____$$$$$$____$$__$$
+    _______$_____$$$_$$$
+    ________$$$$$$$$$$
+    """,
+    
+    """
+    +88_________________+880
+    _+880_______________++80
+    _++88______________+880
+    _++88_____________++88
+    __+880___________++88
+    __+888_________++880
+    __++880_______++880
+    __++888_____+++880
+    __++8888__+++8880++88
+    __+++8888+++8880++8888
+    ___++888++8888+++8888+80
+    ___++88++8888++888888++88
+    ___++++++888888fx888888888
+    ____++++++8888888888888888
+    ____++++++++00088888888888
+    _____+++++++00008f8888888
+    ______+++++++00088888888
+    _______+++++++0888f8888
+    """
+]
+
+struct NavigationTabView: View {
+    
+    @Binding var selectedTabIndex: Int
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Button("Emojis") {
+                selectedTabIndex = 0
+            }
+            .foregroundColor(selectedTabIndex == 0 ? Color("TextGrayColor"): Color("TextDarkGrayColor"))
+            .font(.system(size: selectedTabIndex == 0 ? 30 : 25).bold())
+            Spacer()
+            
+            Button("Symbol Art") {
+                selectedTabIndex = 1
+            }
+            .foregroundColor(selectedTabIndex == 1 ? Color("TextGrayColor"): Color("TextDarkGrayColor"))
+            .font(.system(size: selectedTabIndex == 1 ? 30 : 25).bold())
+            Spacer()
+        }
+        .padding(5)
+        .background(Color("DarkBackgroundColor"))
+    }
+}
 
 struct EmojiView: View {
     var delegate: ConversationDelegate?
@@ -87,6 +201,7 @@ struct MainView: View {
     let brownColor = Color(UIColor(red: 212, green: 147, blue: 57, alpha: 1))
     let darkerBrownColor = Color(UIColor(red: 199, green: 136, blue: 48, alpha: 1))
     
+    @State var selectedTabIndex: Int = 0
     @State var selectedSizeIndex: Int = 1
     
     var body: some View {
@@ -96,30 +211,80 @@ struct MainView: View {
             
             //Color("BackgroundColor").ignoresSafeArea()
             VStack {
-                ScrollView(.vertical) {
-                    Text("Select an Emoji")
-                        .font(.system(size: 30).bold())
-                    EmojiView(delegate: delegate)
+                NavigationTabView(selectedTabIndex: $selectedTabIndex)
+                
+                if selectedTabIndex == 0 {
+                    ScrollView(.vertical) {
+                        EmojiView(delegate: delegate)
+                    }
+                    HStack {
+                        Spacer()
+                        Text("Select Size:")
+                            .font(.system(size: 26).bold())
+                        Spacer()
+                        Button("x1.5") {selectedSizeIndex = 0; delegate?.setEmojiSize(size: 1.5)}
+                            .font(.system(size: selectedSizeIndex == 0 ? 33 : 24).bold())
+                        Spacer()
+                        Button("x2") {selectedSizeIndex = 1; delegate?.setEmojiSize(size: 2)}
+                            .font(.system(size: selectedSizeIndex == 1 ? 33 : 24).bold())
+                        Spacer()
+                        Button("x3") {selectedSizeIndex = 2; delegate?.setEmojiSize(size: 3)}
+                            .font(.system(size: selectedSizeIndex == 2 ? 33 : 24).bold())
+                        Spacer()
+                        Button("x4") {selectedSizeIndex = 3; delegate?.setEmojiSize(size: 4)}
+                            .font(.system(size: selectedSizeIndex == 3 ? 33 : 24).bold())
+                        Spacer()
+                    }
+                    .background(Color("DarkBackgroundColor"))
                 }
-                HStack {
-                    Spacer()
-                    Text("Select Size:")
-                        .font(.system(size: 26).bold())
-                    Spacer()
-                    Button("x1.5") {selectedSizeIndex = 0; delegate?.setEmojiSize(size: 1.5)}
-                        .font(.system(size: selectedSizeIndex == 0 ? 33 : 24).bold())
-                    Spacer()
-                    Button("x2") {selectedSizeIndex = 1; delegate?.setEmojiSize(size: 2)}
-                        .font(.system(size: selectedSizeIndex == 1 ? 33 : 24).bold())
-                    Spacer()
-                    Button("x3") {selectedSizeIndex = 2; delegate?.setEmojiSize(size: 3)}
-                        .font(.system(size: selectedSizeIndex == 2 ? 33 : 24).bold())
-                    Spacer()
-                    Button("x4") {selectedSizeIndex = 3; delegate?.setEmojiSize(size: 4)}
-                        .font(.system(size: selectedSizeIndex == 3 ? 33 : 24).bold())
-                    Spacer()
+                else if selectedTabIndex == 1 {
+                    ScrollView(.vertical) {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Button("Smiley") {
+                                    delegate?.sendText(text: symbolArtList[0])
+                                }
+                                .font(.system(size: 28).bold())
+                                .foregroundColor(Color("TextRegularColor"))
+                                .padding(5)
+                                .background(Color("EmojiBackgroundColor"))
+                                .cornerRadius(7)
+                                Spacer()
+                                Button("Hot Air Balloon") {
+                                    delegate?.sendText(text: symbolArtList[1])
+                                }
+                                .font(.system(size: 28).bold())
+                                .foregroundColor(Color("TextRegularColor"))
+                                .padding(5)
+                                .background(Color("EmojiBackgroundColor"))
+                                .cornerRadius(7)
+                                Spacer()
+                            }
+                            HStack {
+                                Spacer()
+                                Button("Thumb Hand") {
+                                    delegate?.sendText(text: symbolArtList[2])
+                                }
+                                .font(.system(size: 28).bold())
+                                .foregroundColor(Color("TextRegularColor"))
+                                .padding(5)
+                                .background(Color("EmojiBackgroundColor"))
+                                .cornerRadius(7)
+                                Spacer()
+                                Button("Peace Hand") {
+                                    delegate?.sendText(text: symbolArtList[3])
+                                }
+                                .font(.system(size: 28).bold())
+                                .foregroundColor(Color("TextRegularColor"))
+                                .padding(5)
+                                .background(Color("EmojiBackgroundColor"))
+                                .cornerRadius(7)
+                                Spacer()
+                            }
+                        }
+                    }
                 }
-                .background(Color("DarkBackgroundColor"))
             }
         }
     }

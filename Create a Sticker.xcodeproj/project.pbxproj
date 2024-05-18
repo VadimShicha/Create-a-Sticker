@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A062DEC2BF8555400AA25A1 /* CodeSaves.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9A062DEB2BF8555400AA25A1 /* CodeSaves.rtf */; };
+		9A062DEE2BF878B200AA25A1 /* SymbolArts.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 9A062DED2BF878B200AA25A1 /* SymbolArts.rtf */; };
 		9A323AE02BEF4E840053476A /* smiling-face-with-heart-eyes-x1.5.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A323ADF2BEF4E840053476A /* smiling-face-with-heart-eyes-x1.5.png */; };
 		9A323AE22BEF4ED20053476A /* smiling-face-with-heart-eyes-x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A323AE12BEF4ED20053476A /* smiling-face-with-heart-eyes-x2.png */; };
 		9A323AE42BEF4EE80053476A /* smiling-face-with-heart-eyes-x3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A323AE32BEF4EE80053476A /* smiling-face-with-heart-eyes-x3.png */; };
@@ -81,6 +83,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A062DEB2BF8555400AA25A1 /* CodeSaves.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = CodeSaves.rtf; sourceTree = "<group>"; };
+		9A062DED2BF878B200AA25A1 /* SymbolArts.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = SymbolArts.rtf; sourceTree = "<group>"; };
 		9A323ADF2BEF4E840053476A /* smiling-face-with-heart-eyes-x1.5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smiling-face-with-heart-eyes-x1.5.png"; sourceTree = "<group>"; };
 		9A323AE12BEF4ED20053476A /* smiling-face-with-heart-eyes-x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smiling-face-with-heart-eyes-x2.png"; sourceTree = "<group>"; };
 		9A323AE32BEF4EE80053476A /* smiling-face-with-heart-eyes-x3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smiling-face-with-heart-eyes-x3.png"; sourceTree = "<group>"; };
@@ -254,6 +258,8 @@
 				9A443AC12BEC2FB1000E403B /* MainView.swift */,
 				9A5872D72BE9F89800A14F5D /* Info.plist */,
 				9A8B945D2BEDA96A0095A414 /* Assets.xcassets */,
+				9A062DEB2BF8555400AA25A1 /* CodeSaves.rtf */,
+				9A062DED2BF878B200AA25A1 /* SymbolArts.rtf */,
 			);
 			path = "Create a Sticker MessagesExtension";
 			sourceTree = "<group>";
@@ -410,6 +416,7 @@
 				9A323AF62BEF50B20053476A /* pouting-face-x3.png in Resources */,
 				9A8B947E2BEDF3550095A414 /* man-facepalming-x4.png in Resources */,
 				9A8B94752BEDEF830095A414 /* face-with-tears-of-joy-x4.png in Resources */,
+				9A062DEE2BF878B200AA25A1 /* SymbolArts.rtf in Resources */,
 				9A323AF82BEF50C00053476A /* pouting-face-x4.png in Resources */,
 				9A8B94712BEDEF4D0095A414 /* face-with-tears-of-joy-x2.png in Resources */,
 				9A323AF42BEF50A00053476A /* pouting-face-x2.png in Resources */,
@@ -446,6 +453,7 @@
 				9A323B082BEF5BCA0053476A /* clown-face-x3.png in Resources */,
 				9A8B94732BEDEF6A0095A414 /* face-with-tears-of-joy-x3.png in Resources */,
 				9A8B947C2BEDF33E0095A414 /* man-facepalming-x3.png in Resources */,
+				9A062DEC2BF8555400AA25A1 /* CodeSaves.rtf in Resources */,
 				9A323B0A2BEF5BCA0053476A /* clown-face-x1.5.png in Resources */,
 				9A8B94872BEDF4D40095A414 /* prince-x4.png in Resources */,
 			);
@@ -602,7 +610,7 @@
 				DEVELOPMENT_TEAM = YX6HQPQFG5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Create a Sticker MessagesExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Vadim's Emojis";
+				INFOPLIST_KEY_CFBundleDisplayName = "Scaled Emojis";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -628,7 +636,7 @@
 				DEVELOPMENT_TEAM = YX6HQPQFG5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Create a Sticker MessagesExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Vadim's Emojis";
+				INFOPLIST_KEY_CFBundleDisplayName = "Scaled Emojis";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

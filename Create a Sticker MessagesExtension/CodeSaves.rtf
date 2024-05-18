@@ -1,0 +1,125 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Bold;\f1\fnil\fcharset0 Menlo-Regular;\f2\fswiss\fcharset0 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;\red252\green95\blue163;\red31\green31\blue36;\red255\green255\blue255;
+\red93\green216\blue255;\red108\green121\blue134;\red108\green121\blue134;\red108\green121\blue134;\red182\green188\blue194;
+\red146\green161\blue177;\red65\green161\blue192;\red208\green168\blue255;\red208\green168\blue255;\red161\green103\blue230;
+\red161\green103\blue230;\red208\green191\blue105;}
+{\*\expandedcolortbl;;\csgenericrgb\c98839\c37355\c63833;\csgenericrgb\c12054\c12284\c14131;\csgenericrgb\c100000\c100000\c100000\c85000;
+\csgenericrgb\c36295\c84643\c99897;\csgenericrgb\c42394\c47462\c52518\c45000;\csgenericrgb\c42394\c47462\c52518;\csgenericrgb\c42394\c47462\c52518\c60000;\csgenericrgb\c71197\c73731\c76259\c92500;
+\csgenericrgb\c57255\c63137\c69412;\csgenericrgb\c25490\c63137\c75294;\csgenericrgb\c81569\c65882\c100000;\csgenericrgb\c81681\c65692\c99927;\csgenericrgb\c63137\c40392\c90196;
+\csgenericrgb\c63232\c40219\c90115;\csgenericrgb\c81498\c74939\c41233;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab593
+\pard\tx593\pardeftab593\partightenfactor0
+
+\f0\b\fs24 \cf2 \cb3 =MessagesViewController.swift=\
+\
+extension
+\f1\b0 \cf4  \cf5 String\cf4  \{\
+    \
+    \cf6 ///\cf4  
+\f2 \cf7 Generates a 
+\f1 \cf8 `\cf9 UIImage\cf8 `
+\f2 \cf7  instance from this string using a specified
+\f1 \cf4 \
+    \cf6 ///\cf4  
+\f2 \cf7 attributes and size.
+\f1 \cf4 \
+    \cf6 ///\cf4 \
+    \cf6 ///\cf4  \cf8 - 
+\f0\b \cf10 Parameters
+\f1\b0 \cf8 :\cf4 \
+    \cf6 ///\cf4      \cf8 - 
+\f2 \cf7 attributes: to draw this string with. Default is 
+\f1 \cf8 `\cf9 nil\cf8 `
+\f2 \cf7 .
+\f1 \cf4 \
+    \cf6 ///\cf4      \cf8 - 
+\f2 \cf7 size: of the image to return.
+\f1 \cf4 \
+    \cf6 ///\cf4  \cf8 - 
+\f0\b \cf10 Returns
+\f1\b0 \cf8 : 
+\f2 \cf7 a 
+\f1 \cf8 `\cf9 UIImage\cf8 `
+\f2 \cf7  instance from this string using a specified
+\f1 \cf4 \
+    \cf6 ///\cf4  
+\f2 \cf7 attributes and size, or 
+\f1 \cf8 `\cf9 nil\cf8 `
+\f2 \cf7  if the operation fails.
+\f1 \cf4 \
+    
+\f0\b \cf2 func
+\f1\b0 \cf4  \cf11 image\cf4 (\cf11 withAttributes\cf4  attributes: [\cf12 NSAttributedString\cf4 .\cf13 Key\cf4 : 
+\f0\b \cf2 Any
+\f1\b0 \cf4 ]? = 
+\f0\b \cf2 nil
+\f1\b0 \cf4 , \cf11 size\cf4 : \cf13 CGSize\cf4 ? = 
+\f0\b \cf2 nil
+\f1\b0 \cf4 ) -> \cf12 UIImage\cf4 ? \{\
+        
+\f0\b \cf2 let
+\f1\b0 \cf4  size = size ?? (
+\f0\b \cf2 self
+\f1\b0 \cf4  
+\f0\b \cf2 as
+\f1\b0 \cf4  \cf12 NSString\cf4 ).\cf14 size\cf4 (\cf14 withAttributes\cf4 : attributes)\
+        
+\f0\b \cf2 return
+\f1\b0 \cf4  \cf12 UIGraphicsImageRenderer\cf4 (\cf14 size\cf4 : size).\cf14 image\cf4  \{ _ 
+\f0\b \cf2 in
+\f1\b0 \cf4 \
+            (
+\f0\b \cf2 self
+\f1\b0 \cf4  
+\f0\b \cf2 as
+\f1\b0 \cf4  \cf12 NSString\cf4 ).\cf14 draw\cf4 (\cf14 in\cf4 : \cf13 CGRect\cf4 (\cf14 origin\cf4 : .\cf15 zero\cf4 , \cf14 size\cf4 : size),\
+                                    \cf14 withAttributes\cf4 : attributes)\
+        \}\
+    \}\
+    \
+\}\
+\
+
+\f0\b \cf2 extension
+\f1\b0 \cf4  \cf5 CGSize\cf4  \{\
+    \
+    
+\f0\b \cf2 typealias
+\f1\b0 \cf4  \cf5 ContextClosure\cf4  = (_ context: \cf12 CGContext\cf4 , _ frame: \cf13 CGRect\cf4 ) -> ()\
+    
+\f0\b \cf2 func
+\f1\b0 \cf4  \cf11 image\cf4 (\cf11 withContext\cf4  context: ContextClosure) -> \cf12 UIImage\cf4 ? \{\
+        \
+        \cf14 UIGraphicsBeginImageContext\cf4 (
+\f0\b \cf2 self
+\f1\b0 \cf4 )\
+        
+\f0\b \cf2 let
+\f1\b0 \cf4  frame = \cf13 CGRect\cf4 (\cf14 origin\cf4 : .\cf15 zero\cf4 , \cf14 size\cf4 : 
+\f0\b \cf2 self
+\f1\b0 \cf4 )\
+        context(\cf14 UIGraphicsGetCurrentContext\cf4 ()!, frame)\
+        \
+        
+\f0\b \cf2 let
+\f1\b0 \cf4  image = \cf14 UIGraphicsGetImageFromCurrentImageContext\cf4 ()\
+        \cf14 UIGraphicsEndImageContext\cf4 ()\
+        
+\f0\b \cf2 return
+\f1\b0 \cf4  image\
+    \}\
+\}\
+\
+
+\f0\b \cf2 func
+\f1\b0 \cf4  \cf11 imageFromEmoji\cf4 (\cf11 emoji\cf4 : \cf13 String\cf4 , \cf11 size\cf4 : \cf13 CGFloat\cf4 ) -> \cf12 UIImage\cf4 ? \{\
+        
+\f0\b \cf2 return
+\f1\b0 \cf4  emoji.image(withAttributes: [\
+            .\cf15 font\cf4 : \cf12 UIFont\cf4 .\cf14 systemFont\cf4 (\cf14 ofSize\cf4 : size),\
+            .\cf15 backgroundColor\cf4 : \cf12 UIColor\cf4 .\cf14 init\cf4 (\cf14 red\cf4 : \cf16 \cb3 0\cf4 \cb3 , \cf14 green\cf4 : \cf16 \cb3 0\cf4 \cb3 , \cf14 blue\cf4 : \cf16 \cb3 0\cf4 \cb3 , \cf14 alpha\cf4 : \cf16 \cb3 0\cf4 \cb3 )\
+        ], size: \cf13 CGSize\cf4 (\cf14 width\cf4 : size, \cf14 height\cf4 : size))\
+    \}}
